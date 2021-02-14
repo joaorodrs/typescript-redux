@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { connect } from 'react-redux'
 import { ApplicationState } from '../../store'
@@ -16,9 +16,13 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps
 
-const RepositoryList: React.FC<Props> = ({ repositories }) => {
+const RepositoryList: React.FC<Props> = (props) => {
+  useEffect(() => props.loadRequest())
+
   return (
-    <h1>{repositories.map(repo => repo.id)}</h1>
+    <ul>
+      {props.repositories.map(repo => <li>{repo.name}</li>)}
+    </ul>
   )
 }
 
@@ -27,8 +31,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   repositories: state.repositories.data
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch) => 
   bindActionCreators(RepositoriesActions, dispatch)
-}
 
 export default connect(mapStateToProps, mapDispatchToProps)(RepositoryList)
