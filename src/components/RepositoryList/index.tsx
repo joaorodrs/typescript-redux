@@ -5,6 +5,7 @@ import { ApplicationState } from '../../store'
 import { Repository } from '../../store/ducks/repositories/types'
 import * as RepositoriesActions from '../../store/ducks/repositories/actions'
 import { bindActionCreators, Dispatch } from 'redux'
+import RepositoryItem from '../RepositoryItem'
 
 interface StateProps {
   repositories: Repository[]
@@ -20,9 +21,9 @@ const RepositoryList: React.FC<Props> = (props) => {
   useEffect(() => props.loadRequest())
 
   return (
-    <ul>
-      {props.repositories.map(repo => <li>{repo.name}</li>)}
-    </ul>
+    <div>
+      {props.repositories.map(repo => <RepositoryItem repository={repo} />)}
+    </div>
   )
 }
 
